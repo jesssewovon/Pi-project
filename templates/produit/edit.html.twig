@@ -1,0 +1,64 @@
+{% extends 'adminLayout.html.twig' %}
+
+{% block title %}New Categorie{% endblock %}
+
+{% block slider %}{% endblock %}
+{% block newsletter %}{% endblock newsletter %}
+
+{% block body %}
+<main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-edit"></i> Modification produit</h1>
+          <p><a href="{{ path('produit_index') }}"><i class="fa fa-list">Liste produit</i></a></p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item">Forms</li>
+          <li class="breadcrumb-item"><a href="#">Sample Forms</a></li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="tile">
+            <h3 class="tile-title">Formulaire modification produit</h3>
+            {{ form_start(form) }}
+            <div class="tile-body">
+            	<div class="form-group">
+                  <label class="control-label">{{ form_label(form.categorie) }}</label>
+                  {{ form_widget(form.categorie) }}
+                  {{ form_errors(form.categorie) }}
+                </div>
+                <div class="row">
+                <div class="col-md-8 form-group">
+                  <label class="control-label">{{ form_label(form.nom) }}</label>
+                  {{ form_widget(form.nom) }}
+                  {{ form_errors(form.nom) }}
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="control-label">{{ form_label(form.prix) }}</label>
+                  {{ form_widget(form.prix) }}
+                  {{ form_errors(form.prix) }}
+                </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">{{ form_label(form.description) }}</label>
+                  {{ form_widget(form.description) }}
+                  {{ form_errors(form.description) }}
+                </div>
+                <div class="form-group">
+                  <label class="control-label">{{ form_label(form.photo) }}</label>
+                  {{ form_widget(form.photo) }}
+                  {{ form_errors(form.photo) }}
+                </div>
+            </div>
+            <div class="tile-footer">
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>{{ button_label|default('Modifier') }}</button>
+            </div>
+            {{ form_end(form) }}
+          </div>
+          {{ include('produit/_delete_form.html.twig') }}
+        </div>
+      </div>
+    </main>
+{% endblock %}

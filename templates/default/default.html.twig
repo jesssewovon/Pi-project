@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pi-Shop{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+        <link rel="stylesheet" href="{{asset(chemin ~ 'template/assets/css/carousel.css')}}">
+{% endblock %}
+
+{% block screen %}
+
+{% endblock %}
+
+{% block newsletter %}
+
+{% endblock %}
+
+{% block contact %}
+
+{% endblock %}
+
+{% block body %}
+<section id="contenu">
+		{{ include('default/VIPAnnonces.html.twig') }}
+		
+	</section>
+        
+
+{% endblock body %}
+
+{% block scripts %}
+    {{ parent() }}
+        <script src="{{asset(chemin ~ 'template/assets/js/scripts.js')}}"></script>
+{% endblock %}

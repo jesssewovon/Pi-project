@@ -1,0 +1,50 @@
+{% extends 'adminLayout.html.twig' %}
+
+{% block title %}New Categorie{% endblock %}
+
+{% block slider %}{% endblock %}
+{% block newsletter %}{% endblock newsletter %}
+
+{% block body %}
+<main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-edit"></i> Nouvelle catégorie</h1>
+          <p><a href="{{ path('categorie_index') }}"><i class="fa fa-list">Liste catégorie</i></a></p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item">Forms</li>
+          <li class="breadcrumb-item"><a href="#">Sample Forms</a></li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="tile">
+            <h3 class="tile-title">Formulaire nouvelle catégorie</h3>
+            {{ form_start(form) }}
+            <div class="tile-body">
+                <div class="row">
+                <div class="col-md-4 form-group">
+                  <label class="control-label">{{ form_label(form.code) }}</label>
+                  {{ form_widget(form.code) }}
+                </div>
+                <div class="col-md-8 form-group">
+                  <label class="control-label">{{ form_label(form.libelle) }}</label>
+                  {{ form_widget(form.libelle) }}
+                </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">{{ form_label(form.description) }}</label>
+                  {{ form_widget(form.description) }}
+                </div>
+            </div>
+            <div class="tile-footer">
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>{{ button_label|default('Ajouter') }}</button>
+            </div>
+            {{ form_end(form) }}
+          </div>
+        </div>
+      </div>
+    </main>
+{% endblock %}

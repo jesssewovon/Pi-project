@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="img/fav.png">
+	<!-- Author Meta -->
+	<meta name="author" content="CodePixar">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>{% block title %}Welcome!{% endblock %}</title>
+
+	{% set chemin = '' %}
+    {#% set chemin = 'public/' %#}
+    
+    {% block stylesheets %}
+	    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,500,600" rel="stylesheet"> -->
+		<!--
+		CSS
+		============================================= -->
+		<link rel="stylesheet" href="{{asset(chemin ~ 'template/bootstrap4.4.1/css/bootstrap.min.css')}}">
+		<link rel="stylesheet" href="{{asset(chemin ~ 'template/css/font-awesome.min.css')}}">
+		<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"> -->
+		<link rel="stylesheet" href="{{asset(chemin ~ 'template/css/main.css')}}">
+		<link rel="stylesheet" href="{{asset(chemin ~ 'template/css_new/style.css')}}">
+		<link rel="stylesheet" href="{{asset(chemin ~ 'template/css_new/VIPAnnoncesCarousel/carousel.css')}}">
+		<link rel="stylesheet" href="{{asset(chemin ~ 'template/css_new/responsive.css')}}">
+		<link rel="stylesheet" href="{{asset(chemin ~ 'template/css_new/loader.css')}}">
+		<link rel="stylesheet" href="{{asset(chemin ~ 'template/css_new/loader-1.css')}}">
+		<link rel="stylesheet" href="{{asset(chemin ~ 'template/css_new/bottom-menu.css')}}">
+	{% endblock %}
+	</head>
+	<body>
+		<section id="menu" class="" style="overflow: hidden;">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-image: -webkit-linear-gradient(0deg, #e66587 0%, #f09458 100%);z-index: 11;">
+			    <a class="navbar-brand" href="{{ path('index') }}" style=""><img src="{{ asset(chemin ~ 'template/pi_32.png') }}" style="width: 25px;height: 25px;"></a>
+
+			    <!-- <input type="text" class="" name=""> -->
+			    {% set search_word = '' %}
+			    {% if mot is defined %}
+			        {% set search_word = mot %}
+			    {% endif %}
+			    <form method="GET" class="search_form subscription relative mobile_search_bar" action="{{ path('word_search') }}">
+					<input class="form-control" id="search" type="text" name="mot" placeholder="Recherche" onfocus="this.style.border='none';this.placeholder = ''" onblur="this.placeholder = 'Recherche'" required="" value="{{search_word}}">
+					<div style="position: absolute; left: -5000px;">
+						<input type="text" name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="">
+					</div>
+					<button class="sub primary-btn hover d-inline-flex align-items-center"><span class="mr-10"><i class="fa fa-search" style="color: white;"></i></span><span class="lnr lnr-arrow-right"></span></button>
+					<div class="info"></div>
+				</form>
+				<!-- <img class="mobile_search_bar hide_on_mobile" src="{{ asset(chemin ~ 'template/user_icon.png') }}" style="width: 30px;height: 30px;margin: 0 10px"> -->
+				
+				<!-- <a href="">
+					<img src="{{ asset(chemin ~ 'template/user_icon.png') }}">
+				</a> -->
+
+			    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			        <!-- <span class="navbar-toggler-icon"></span> -->
+			        <img src="{{ asset(chemin ~ 'template/user_icon.png') }}" style="width: 30px;height: 30px;">
+			    </button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				    <ul class="navbar-nav mr-auto">
+				      <li class="nav-item active hide_on_mobile">
+				        <a class="nav-link" href="{{ path('index') }}">Shop <span class="sr-only">(current)</span></a>
+				      </li>
+				      {% if not app.user %}
+    					  <li class="nav-item hide_on_mobile">
+					        <a class="nav-link" data-toggle="modal" data-target="#compteModal" onclick="reinitialisation();">Faire annonce</a>
+					      </li>
+					  {% endif %}
+				      <li class="nav-item hide_on_mobile">
+				        <a class="nav-link" href="{{ path('index') }}#contact">Contact</a>
+				      </li>
+				      
+				      {% if app.user %}
+    					  <li class="nav-item">
+					        <a class="nav-link" href="{{ path('produit_index') }}">Dashboard</a>
+					      </li>
+					  {% endif %}
+				    </ul>
+				    <form method="GET" class="search_form subscription relative pc_search_bar hide_on_mobile" action="{{ path('word_search') }}">
+						<input class="form-control" id="search" type="text" name="mot" placeholder="Recherche" onfocus="this.style.border='none';this.placeholder = ''" onblur="this.placeholder = 'Recherche'" required="" value="{{search_word}}">
+						<div style="position: absolute; left: -5000px;">
+							<input type="text" name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="">
+						</div>
+						<button class="sub primary-btn hover d-inline-flex align-items-center"><span class="mr-10"><i class="fa fa-search" style="color: white;"></i></span><span class="lnr lnr-arrow-right"></span></button>
+						<div class="info"></div>
+					</form>
+					{% if app.user %}
+    					<a href="{{ path('app_logout') }}">Se déconnecter</a>
+					{% else %}
+					    <a class="nav-link" data-toggle="modal" data-target="#compteModal" onclick="reinitialisation();">Se connecter</a>
+					{% endif %}
+				</div>
+			</nav>
+			<!--div id="cadre" style="width: 15%;height: 50px;background-color: #512c75;margin-bottom: -50px;position: relative;z-index: 10;box-shadow: 0 0 10px rgba(250, 250, 250, 0.2) inset;border-bottom-right-radius: 10px;">
+			</div-->
+			<!-- <img src="{{ asset('template/first_banner500.png') }}" class="img-fluid" alt="Responsive image" style="width: 100%;margin-top: 20px;"> -->
+            {% block screen %}
+			<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" style="width: 100%;">
+			    <ol class="carousel-indicators">
+			      <li data-target="#carouselExampleCaptions" data-slide-to="0" class=""></li>
+			      <li data-target="#carouselExampleCaptions" data-slide-to="1" class=""></li>
+			      <li data-target="#carouselExampleCaptions" data-slide-to="2" class="active"></li>
+			    </ol>
+			    <div class="carousel-inner">
+			      <div class="carousel-item active">
+			        <img class="d-block w-100" data-src="holder.js/800x400?auto=yes&amp;bg=777&amp;fg=555&amp;text=First slide" alt="First slide [800x400]" src="{{ asset(chemin ~ 'template/slider/slide1.jpg') }}" data-holder-rendered="true">
+			        <div class="carousel-caption d-none d-md-block">
+			          <h5 class="title">Pi-Shop</h5>
+			          <p>Plateforme web d'achats de produits avec Pi monnaie</p>
+			        </div>
+			      </div>
+			      <div class="carousel-item">
+			        <img class="d-block w-100" data-src="holder.js/800x400?auto=yes&amp;bg=666&amp;fg=444&amp;text=Second slide" alt="Second slide [800x400]" src="{{ asset(chemin ~ 'template/slider/slide2.jpg') }}" data-holder-rendered="true">
+			        <div class="carousel-caption d-none d-md-block">
+			          <h5 class="title">Vendre et acheter avec Pi, shopping</h5>
+			          <p>Faites vos achats et ventes en toute sécurité</p>
+			        </div>
+			      </div>
+			      <div class="carousel-item">
+			        <img class="d-block w-100" data-src="holder.js/800x400?auto=yes&amp;bg=555&amp;fg=333&amp;text=Third slide" alt="Third slide [800x400]" src="{{ asset(chemin ~ 'template/slider/slide3.jpg') }}" data-holder-rendered="true">
+			        <div class="carousel-caption d-none d-md-block">
+			          <h5 class="title">Comment obtenir la monnaie Pi?</h5>
+			          <p>La monnaie Pi s'obtient en minant sur l'application mobile</p>
+			          <a id="more" class="primary-btn" href="{{ path('instruction') }}">Lire</a>
+			        </div>
+			      </div>
+			    </div>
+			    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+			      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			      <span class="sr-only">Previous</span>
+			    </a>
+			    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+			      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			      <span class="sr-only">Next</span>
+			    </a>
+			</div>
+			{% endblock %}
+		</section>
+        {% block body %}
+		<section id="contenu">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-1">
+						<h4 style="padding-top: 0px;">Catégorie</h4>
+					</div>
+					<div class="col-md-11">
+						<div class="container">
+							<div class="row">
+								<div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel"  data-interval="1000">
+						            <div class="MultiCarousel-inner">
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Meuble</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Véhicules</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Electronique</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Immobilier</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Nourriture</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Vêtements</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Elevage</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Agriculture</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Multi Item Carousel</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Multi Item Carousel</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Multi Item Carousel</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Multi Item Carousel</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Multi Item Carousel</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Multi Item Carousel</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Multi Item Carousel</p></a>
+						                    </div>
+						                </div>
+						                <div class="item">
+						                    <div class="pad15">
+						                        <a href=""><p class="lead">Multi Item Carousel</p></a>
+						                    </div>
+						                </div>
+						            </div>
+						            <button class="btn btn-primary leftLst"><</button>
+						            <button class="btn btn-primary rightLst">></button>
+						        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-6 col-md-3" style="">
+								<!-- <img src="{{ asset('template/img/a.jpg') }}" class="img-fluid"> -->
+								<div class="card">
+								  <div style="width: 100%;height: 150px;overflow: hidden;">
+								  	<img class="card-img-top" src="{{ asset('template/images/phone.png') }}" alt="Card image cap">
+								  </div>
+								  
+								  <div class="card-body">
+								  	<i class="fa fa-star"></i>
+								    <h5 class="card-title">Samsung Galaxy S8 Pro</h5>
+								    <p class="card-text">100 Pi</p>
+								  </div>
+								  <a href="#" class="btn btn-primary">Go somewhere</a>
+								</div>
+							</div>
+							<div class="col-6 col-md-3" style="">
+								<!-- <img src="{{ asset('template/img/a.jpg') }}" class="img-fluid"> -->
+								<div class="card">
+								  <div style="width: 100%;height: 150px;overflow: hidden;">
+								  	<img class="card-img-top" src="{{ asset('template/images/robe_bleu.png') }}" alt="Card image cap">
+								  </div>
+
+								  <div class="card-body">
+								  	<i class="fa fa-star"></i>
+								    <h5 class="card-title">Robe femme responsable</h5>
+								    <p class="card-text">20 Pi</p>
+								  </div>
+								  <a href="#" class="btn btn-primary">Go somewhere</a>
+								</div>
+							</div>
+							<div class="col-6 col-md-3" style="">
+								<!-- <img src="{{ asset('template/img/a.jpg') }}" class="img-fluid"> -->
+								<div class="card">
+								  <div style="width: 100%;height: 150px;overflow: hidden;">
+								  	<img class="card-img-top" src="{{ asset('template/img/a.jpg') }}" alt="Card image cap">
+								  </div>
+
+								  <div class="card-body">
+								  	<i class="fa fa-star"></i>
+								    <h5 class="card-title">Château d'eau Lomé</h5>
+								    <p class="card-text">950 Pi</p>
+								  </div>
+								  <a href="#" class="btn btn-primary">Go somewhere</a>
+								</div>
+							</div>
+							<div class="col-6 col-md-3" style="">
+								<!-- <img src="{{ asset('template/img/a.jpg') }}" class="img-fluid"> -->
+								<div class="card">
+								  <div style="width: 100%;height: 150px;overflow: hidden;">
+								  	<img class="card-img-top" src="{{ asset('template/img/a.jpg') }}" alt="Card image cap">
+								  </div>
+
+								  <div class="card-body">
+								  	<i class="fa fa-star"></i>
+								    <h5 class="card-title">Château d'eau Lomé</h5>
+								    <p class="card-text">950 Pi</p>
+								  </div>
+								  <a href="#" class="btn btn-primary">Go somewhere</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<h5>Comment avoir facilement un téléphone portable sur Pi-Shop</h5>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% endblock body %}
+
+		<div class="container h-100">
+	      <div class="d-flex justify-content-center h-100">
+	        <div class="searchbar" style="position: fixed;bottom: 50px;z-index: 9999;">
+	        	<div class="menu">
+	        		<ul>
+	        			<li>
+	        				<a href="{{ path('index') }}"><i class="fa fa-shopping-cart"></i></a>
+	        			</li>&nbsp;
+	        			<li>
+	        				<a href="javascript:void(0)"><i class="fa fa-bullhorn"></i></a>
+	        			</li>&nbsp;
+	        			<li>
+	        				<a href="{{ path('index') }}"><i class="fa fa-phone"></i></a>
+	        			</li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        			<li>
+	        				<a href="javascript:void(0)"><i style="color: white;" class="fa fa-whatsapp"></i></a>
+	        			</li>&nbsp;
+	        			<li>
+	        				<a href="javascript:void(0)" onclick="alert('fa-facebook')"><i style="color: white;" class="fa fa-facebook"></i></a>
+	        			</li>&nbsp;
+	        			<li>
+	        				<a href="javascript:void(0)"><i style="color: white;" class="fa fa-twitter"></i></a>
+	        			</li>&nbsp;
+	        			<li>
+	        				<a href="javascript:void(0)"><i style="color: white;" class="fa fa-instagram"></i></a>
+	        			</li>
+	        			
+	        			<li style="float: right;">
+	        				<a id="scroll" href="javascript:void(0)"><i class="fa fa-arrow-up"></i></a>
+	        			</li>
+	        			<li style="float: right;">
+	        				<a id="scroll" onclick="mineee()"><i class="fa fa-eye-slash"></i></a>
+	        			</li>
+	        		</ul>
+	        	</div>
+	            <a class="search_icon" style="" onclick="minee(this)"><i class="fa fa-bars"></i></a>
+	        </div>
+	      </div>
+	    </div>
+
+        {% block newsletter %}
+		<section class="subscription-area">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-8">
+							<div class="section-title text-center">
+								<h3>Souscription à notre boîte aux lettres</h3>
+								<!-- <span class="text-uppercase">Vous recevrez toutes nos nouveautés</span> -->
+							</div>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+						<div class="col-lg-6">
+							<div id="mc_embed_signup">
+								<form id="newsletter_form" action="{{ path('newsletter') }}" method="POST" class="subscription relative">
+									<input id="newsletter_mail" class="form-control" type="email" name="email" placeholder="Votre adresse mail" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tapez votre adresse mail'" required>
+									<div style="position: absolute; left: -5000px;">
+										<input type="text" name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="">
+									</div>
+									<button id="btn-subs" class="primary-btn hover d-inline-flex align-items-center"><span class="mr-10">Souscrire</span><span class="lnr lnr-arrow-right"></span></button>
+									<div class="info"></div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+		</section>
+		{% endblock newsletter %}
+
+        {% block contact %}
+		<section class="footer-widget-area" id="contact">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-6 col-md-4">
+							<div class="single-widget d-flex flex-wrap justify-content-between">
+								<div class="icon d-flex align-items-center justify-content-center">
+									<span class="lnr lnr-pushpin"></span>
+									<i class="fa fa-address-card fa-3x"></i>
+								</div>
+								<div class="desc">
+									<h6 class="title text-uppercase">Adresse</h6>
+									<p>Adakpamé<br>Lomé-TOGO</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-6 col-md-4">
+							<div class="single-widget d-flex flex-wrap justify-content-between">
+								<div class="icon d-flex align-items-center justify-content-center">
+									<span class="lnr lnr-phone"></span>
+									<i class="fa fa-phone fa-3x"></i>
+								</div>
+								<div class="desc">
+									<h6 class="title text-uppercase">N° de téléphone</h6>
+									<div class="contact">
+										<a href="tel:1545">(+228) 92 10 4313</a> <br>
+										<a href="tel:54512">(+228) 98 32 2186</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-4">
+							<div class="single-widget d-flex flex-wrap justify-content-between">
+								<div class="icon d-flex align-items-center justify-content-center">
+									<span class="lnr lnr-earth"></span>
+									<i class="fa fa-envelope fa-3x"></i>
+								</div>
+								<div class="desc">
+									<h6 class="title text-uppercase">E-mail</h6>
+									<div class="contact">
+										<a href="mailto:info@dataarc.com">jesssewovon@gmail.com</a> <br>
+										<a href="mailto:support@dataarc.com">www.pi-shop.com</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row justify-content-center">
+						<div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
+							<h4 style="text-align: center;color: white;">Nous envoyez un message</h4>
+							<form id="contact_form" method="post" action="{{ path('send_message') }}" class="subscription relative" style="">
+					            	<div class="row">
+					            		<div class="col-7">
+					            			<label>Email</label>
+					                		<input type="text" class="form-control" name="contact_mail" placeholder="Votre email" required>
+					            		</div>
+					            		<div class="col-5">
+					            			<label>Téléphone</label>
+					                		<input type="text" class="form-control" name="contact_phone" placeholder="Votre n° téléphone" required>
+					            		</div>
+					            	</div>
+					                
+					                <label>Message</label>
+					                <textarea rows="3" maxlength="200" name="contact_message" class="form-control" placeholder="Votre message" required></textarea>
+					                <!-- <input class="btn-primary" type="submit" name="contact_envoyer" value="Envoyer"> -->
+					                <button classj="btn btn-primary" style="background-image: -webkit-linear-gradient(0deg, #e66587 0%, #f09458 100%);border:none;border-radius: 50px;color: white;padding: 10px 30px;margin: 10px 0;">Envoyer</button>
+					            </form>
+						</div>
+					</div>
+				</div>
+		</section>
+		{% endblock contact %}
+			<!-- End Footer Widget Area -->
+			<!-- Start footer Area -->
+		{% block footer %}
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-sm-2 col-lg-2">
+						<div class="logo">
+							<!-- <img src="img/logo.png" alt=""> -->
+							<img src="{{ asset(chemin ~ 'template/pi_32.png') }}" alt="">
+						</div>
+					</div>
+					<div class="col-12 col-sm-10 col-lg-8">
+						<div class="copy-right-text" style="text-align: center;">
+							Copyright &copy; Pi-Shop {{ "now"|date('M-Y') }} 
+							<em style="color: #ddd;font-weight: 100;font-size: 16px;">Djédjé SEWOVON </em>  |  Tous droits réservés
+					    </div>
+					</div>
+					<div class="col-12 col-sm-12 col-lg-2">
+						<div class="footer-social" style="text-align: center;">
+							<a href="#"><i class="fa fa-whatsapp"></i></a>
+							<a href="#"><i class="fa fa-facebook"></i></a>
+							<a href="#"><i class="fa fa-twitter"></i></a>
+							<a href="#"><i class="fa fa-instagram"></i></a>
+						</div>
+					</div>
+				</div>
+					
+					
+					
+			</div>
+		</footer>
+		{% endblock footer %}
+		<!-- <div class="showbox"  id="loader">
+		  <div class="loader"> <svg class="circular" viewBox="25 25 50 50">
+		    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+		    </svg> </div>
+		</div> -->
+
+		<div class="loader-wrapper" id="loader-1" style="position: fixed;top: 0;background-color: rgba(0,0,0,0.7);width: 100%;height: 100%;z-index: 9999;">
+			<h3 id="error" style="text-align: center;position: fixed;top: 50px;width: 100%;color: white;display: none;">ERREUR DE CHARGEMENT</h3>
+            <div id="loader"></div>
+        </div>
+
+        <!--MODALS-->
+        <!-- Button trigger modal -->
+		<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#compteModal">
+		  Launch demo modal
+		</button> -->
+
+		<!-- Modal -->
+		<div class="modal fade" id="compteModal" tabindex="-1" role="dialog" aria-labelledby="compteModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content" style="border-radius: 10%;border-color: transparent;">
+		      <!-- <div class="modal-header">
+		        <h5 class="modal-title" id="compteModalLabel">Se connecter</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div> -->
+		      <div class="modal-body">
+				<nav class="nav nav-tabs">
+				  <a class="nav-item nav-link active" href="#p1" data-toggle="tab">Se connecter</a>
+				  <a class="nav-item nav-link" href="#p2" data-toggle="tab">S'inscrire</a>
+				</nav>
+				<div class="tab-content">
+				  <div class="tab-pane active" id="p1">
+				  	  <section id="login">
+					    <div class="row justify-content-center">
+					        <div class="col-md-12">
+					            <form id="login_form" method="post" action="{{ path('app_login') }}" class="subscription relative form_login" style="">
+
+					            	<div id="message" class="alert alert-danger" role="alert" style="display: none;"></div>
+					                
+					                <label for="inputUsername">Nom d'utilisateur</label>
+					                <input type="text" value="" name="username" id="inputUsername" class="form-control" required autofocus placeholder="Entrez votre nom d'utilisateur">
+					                <label for="inputPassword">Mot de passe</label>
+					                <input type="password" name="password" id="inputPassword" class="form-control" required placeholder="Entrez votre mot de passe">
+
+					                <input type="hidden" name="_csrf_token"
+					                       value="{{ csrf_token('authenticate') }}"
+					                >
+					                <button class="primary-btn hover" type="submit">
+					                    <span class="mr-10">Se connecter</span><span class="lnr lnr-arrow-right"></span>
+					                </button>
+					                <a href="#javascript;" style="font-size: 12px;text-decoration: underline;color: black;float: right;" id="oublie"><em>Mot de passe oublié?</em></a>
+					                <!-- <button class="primary-btn hover"><span class="mr-10">Souscrire</span><span class="lnr lnr-arrow-right"></span></button> -->
+					            </form>
+					            <form id="form_reinit" method="post" action="{{ path('ressetting_send_email') }}" class="subscription relative form_login" style="margin-top: 30px;display: none;">
+					            	<hr>
+					            	<h5 style="text-align: center;">Réinitialisation</h5>
+					            	<div id="message_resset_fail" class="alert alert-danger" role="alert" style="display: none;"></div>
+                                	<label for="inputPassword">E-mail</label>
+				                    <input type="text" value="" name="reinit_mail" id="reinit_mail" class="form-control" required autofocus placeholder="Votre mail de réinitialisation">
+				                    <button class="primary-btn hover" type="submit">
+					                    <span class="mr-10">Réinitialiser</span><span class="lnr lnr-arrow-right"></span>
+					                </button>
+					                <div id="message_resset_success" class="alert alert-success" role="alert" style="display: none;"></div>
+                                </form>
+					        </div>
+					    </div>
+					  </section>
+				  </div>
+				  <div class="tab-pane" id="p2">
+				  	  <section id="login">
+					    <div class="row justify-content-center">
+					        <div class="col-md-12">
+                                <form id="register_form" method="post" action="{{ path('app_register') }}" class="subscription relative form_register" style="">
+
+					            	<div id="message" class="alert alert-danger" role="alert" style="display: none;"></div>
+					            	<div class="row">
+					            		<div class="col-md-4">
+					            			<label for="inputUsername">Nom</label>
+					                        <input type="text" value="" name="nom" id="inputUsername" class="form-control" required autofocus placeholder="Entrez votre nom d'utilisateur">
+					            		</div>
+					            		<div class="col-md-8">
+					            			<label for="inputUsername">Prénom(s)</label>
+					                        <input type="text" value="" name="prenom" id="inputUsername" class="form-control" required autofocus placeholder="Entrez votre nom d'utilisateur">
+					            		</div>
+					            	</div>
+					            	<div class="row">
+					            		<div class="col-md-6">
+					            			<label for="inputUsername">Téléphone</label>
+					                        <input type="text" value="" name="telephone" id="inputUsername" class="form-control" required autofocus placeholder="Entrez votre nom d'utilisateur">
+					            		</div>
+					            		<div class="col-md-6">
+					            			<label for="inputUsername">E-mail</label>
+					                        <input type="text" value="" name="register_mail" id="inputUsername" class="form-control" required autofocus placeholder="Entrez votre nom d'utilisateur">
+					            		</div>
+					            	</div>
+					            	<div class="row">
+					            		<div class="col-md-12">
+					            			<label for="inputPassword">Nom d'utilisateur</label>
+					                        <input type="text" name="register_username" id="inputPassword" class="form-control" required placeholder="Entrez votre mot de passe">
+					            		</div>
+					            	</div>
+					            	<div class="row">
+					            		<div class="col-md-12">
+					            			<label for="inputPassword">Adresse</label>
+					                        <textarea name="adresse"></textarea>
+					            		</div>
+					            	</div>
+					            	<div class="row">
+					            		<div class="col-md-6">
+					            			<label for="inputPassword">Mot de passe</label>
+					                        <input type="password" name="password" id="inputPassword" class="form-control" required placeholder="Entrez votre mot de passe">
+					            		</div>
+					            		<div class="col-md-6">
+					            			<label for="inputPassword">Conf Mot de passe</label>
+					                        <input type="password" name="conf" id="inputPassword" class="form-control" required placeholder="Entrez votre mot de passe">
+					            		</div>
+					            	</div>
+					                					                
+					                <button class="primary-btn hover" type="submit">
+					                    <span class="mr-10">S'inscrire</span><span class="lnr lnr-arrow-right"></span>
+					                </button>
+					                <!-- <button class="primary-btn hover"><span class="mr-10">Souscrire</span><span class="lnr lnr-arrow-right"></span></button> -->
+					            </form>
+							</div>
+					    </div>
+					</section>
+				  </div>
+				</div>
+		      </div>
+		      <!-- <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div> -->
+		    </div>
+		  </div>
+		</div>
+
+		<div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog modal-lg">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title"></h4>
+		        </div>
+		        <div class="modal-body">
+		          <p>This is a large modal.</p>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+        <!--END MODALS-->
+
+        {% block scripts %}
+		<script src="{{asset(chemin ~ 'template/jquery-3.1.1.min.js')}}"></script>
+        <script src="{{asset(chemin ~ 'template/popper.min.js')}}"></script>
+        <script src="{{asset(chemin ~ 'template/bootstrap4.4.1/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset(chemin ~ 'template/js_new/VIPAnnoncesCarousel/scripts.js')}}"></script>
+        <script src="{{asset(chemin ~ 'template/js_new/script.js')}}"></script>
+        <script type="text/javascript">
+        	function minee(self){
+        		menu = document.getElementsByClassName('menu')[0];
+        		// menu.style.width = "250px";
+        		// menu.style.overflow = "hidden";
+        		// menu.style.padding = "0 10px";
+        		// menu.style.height = "35px";
+        		// menu.style.transition = "width 0.4s linear";
+
+        		// self.style.background = "white";
+        		// self.style.color = "#e74c3c";
+        		// self.style.display = "none";
+
+        		//menu.addClass
+        		menu.classList.add("menu1");
+        		self.classList.add("search_icon1");
+
+        		// menu.classList.remove("menu1");
+        		// self.classList.remove("search_icon1");
+
+        	}
+
+        	function mineee(){
+        		menu = document.getElementsByClassName('menu')[0];
+        		self = document.getElementsByClassName('search_icon')[0];
+        		
+        		menu.classList.remove("menu1");
+        		self.classList.remove("search_icon1");
+
+        	}
+
+    	    // document.getElementById('loader').style.display = 'none';
+    	    document.getElementById('loader-1').style.display = 'none';
+    	    ///////////////////////////////////////////////
+        	$(document).ready(function () {
+			    var itemsMainDiv = ('.MultiCarousel');
+			    var itemsDiv = ('.MultiCarousel-inner');
+			    var itemWidth = "";
+
+			    $('.leftLst, .rightLst').click(function () {
+			        var condition = $(this).hasClass("leftLst");
+			        if (condition)
+			            click(0, this);
+			        else
+			            click(1, this)
+			    });
+
+			    ResCarouselSize();
+
+
+			    // $(window).resize(function () {
+			    // 	alert('res');
+			    //     ResCarouselSize();
+			    // });
+
+			    //this function define the size of the items
+			    function ResCarouselSize() {
+			        var incno = 0;
+			        var dataItems = ("data-items");
+			        var itemClass = ('.item');
+			        var id = 0;
+			        var btnParentSb = '';
+			        var itemsSplit = '';
+			        var sampwidth = $(itemsMainDiv).width();
+			        var bodyWidth = $('body').width();
+			        $(itemsDiv).each(function () {
+			            id = id + 1;
+			            var itemNumbers = $(this).find(itemClass).length;
+			            btnParentSb = $(this).parent().attr(dataItems);
+			            itemsSplit = btnParentSb.split(',');
+			            $(this).parent().attr("id", "MultiCarousel" + id);
+
+
+			            if (bodyWidth >= 1200) {
+			                incno = itemsSplit[3];
+			                itemWidth = sampwidth / incno;
+			            }
+			            else if (bodyWidth >= 992) {
+			                incno = itemsSplit[2];
+			                itemWidth = sampwidth / incno;
+			            }
+			            else if (bodyWidth >= 768) {
+			                incno = itemsSplit[1];
+			                itemWidth = sampwidth / incno;
+			            }
+			            else {
+			                incno = itemsSplit[0];
+			                itemWidth = sampwidth / incno;
+			            }
+			            itemWidth -= 30;
+			            $(this).css({ 'transform': 'translateX(0px)', 'width': itemWidth * itemNumbers });
+			            $(this).find(itemClass).each(function () {
+			                $(this).outerWidth(itemWidth);
+			            });
+
+			            $(".leftLst").addClass("over");
+			            $(".rightLst").removeClass("over");
+
+			        });
+			    }
+
+
+			    //this function used to move the items
+			    function ResCarousel(e, el, s) {
+			        var leftBtn = ('.leftLst');
+			        var rightBtn = ('.rightLst');
+			        var translateXval = '';
+			        var divStyle = $(el + ' ' + itemsDiv).css('transform');
+			        var values = divStyle.match(/-?[\d\.]+/g);
+			        var xds = Math.abs(values[4]);
+			        if (e == 0) {
+			            translateXval = parseInt(xds) - parseInt(itemWidth * s);
+			            $(el + ' ' + rightBtn).removeClass("over");
+
+			            if (translateXval <= itemWidth / 2) {
+			                translateXval = 0;
+			                $(el + ' ' + leftBtn).addClass("over");
+			            }
+			        }
+			        else if (e == 1) {
+			            var itemsCondition = $(el).find(itemsDiv).width() - $(el).width();
+			            translateXval = parseInt(xds) + parseInt(itemWidth * s);
+			            $(el + ' ' + leftBtn).removeClass("over");
+
+			            if (translateXval >= itemsCondition - itemWidth / 2) {
+			                translateXval = itemsCondition;
+			                $(el + ' ' + rightBtn).addClass("over");
+			            }
+			        }
+			        $(el + ' ' + itemsDiv).css('transform', 'translateX(' + -translateXval + 'px)');
+			    }
+
+			    //It is used to get some elements from btn
+			    function click(ell, ee) {
+			        var Parent = "#" + $(ee).parent().attr("id");
+			        var slide = $(Parent).attr("data-slide");
+			        ResCarousel(ell, Parent, slide);
+			    }
+
+			    $('#oublie').click(function(e){
+			    	e.preventDefault();
+			    	if (document.getElementById('form_reinit').style.display == 'none') {
+			    		document.getElementById('form_reinit').style.display = 'block';
+			    	}else{
+			    		document.getElementById('form_reinit').style.display = 'none';
+			    	}
+			    });
+	        	if (window.screen.width < 576) {
+	        		paddingLeft = 10;
+	        		taille = 80;
+				    $('.MultiCarousel-inner').css('padding-left', paddingLeft+"px");
+				    $('.MultiCarousel-inner .item').css('width', "max-content");
+				    nb = $('.MultiCarousel-inner .item').length;
+				    $('.MultiCarousel-inner').css('width', parseInt(taille*nb+paddingLeft)+"px");
+				}
+			});
+			
+			var login_form = $('#login_form');
+		    login_form.submit(function(e) {
+		    	$('#message').css('display', 'none');
+		    	$('.loader-wrapper').css('display','block');
+		        // prevent form submission
+		        e.preventDefault();
+
+		        // submit the form via Ajax
+		        $.ajax({
+		            url: login_form.attr('action'),
+		            type: login_form.attr('method'),
+		            dataType: 'html',
+		            data: login_form.serialize(),
+		            success: function(result) {
+		            	result = JSON.parse(result);
+		            	// console.log(result);
+		                if (result.status == 'success') {
+		                	location.href = "{{ path('produit_index') }}";
+		                }else{
+                            $('#message').css('display', 'block');
+                            $('#message').html("Identifiants incorrect(s)");
+		                }
+		                $('.loader-wrapper').css('display','none');
+		            },
+		            error: function(){
+		            	message = "Une erreur s'est produite, veuillez reessayer";
+		            	$('#message').css('display', 'block');
+                        $('#message').html(message);
+		            	$('.loader-wrapper').css('display','none');
+		            }
+		        });
+		    });
+
+		    var resseting_form = $('#form_reinit');
+		    resseting_form.submit(function(e) {
+		    	$('#message_resset_fail').css('display', 'none');
+		    	$('#message_resset_success').css('display', 'none');
+		    	$('.loader-wrapper').css('display','block');
+		        // prevent form submission
+		        e.preventDefault();
+
+		        // submit the form via Ajax
+		        $.ajax({
+		            url: resseting_form.attr('action'),
+		            type: resseting_form.attr('method'),
+		            dataType: 'html',
+		            data: resseting_form.serialize(),
+		            success: function(result) {
+		            	result = JSON.parse(result);
+		                console.log(result);
+		                if (result.status == 'success') {
+		                	document.getElementById("reinit_mail").value = '';
+		                	$('#message_resset_success').css('display', 'block');
+		                	$('#message_resset_success').html("Un e-mail contenant un lien vous a été envoyé, veuillez cliquer sur le lien pour reinitialiser votre mot de passe");
+		                }
+		                else{
+                            $('#message_resset_fail').css('display', 'block');
+                            $('#message_resset_fail').html(result.message);
+		                }
+		                $('.loader-wrapper').css('display','none');
+		            },
+		            error: function(){
+		            	message = "Une erreur s'est produite, veuillez reessayer";
+		            	$('#message_resset_fail').css('display', 'block');
+                        $('#message_resset_fail').html(message);
+		            	$('.loader-wrapper').css('display','none');
+		            }
+		        });
+		    });
+
+		    var register_form = $('#register_form');
+		    register_form.submit(function(e) {
+		    	// $('#message').css('display', 'none');
+		    	$('.loader-wrapper').css('display','block');
+		        // prevent form submission
+		        e.preventDefault();
+
+		        // submit the form via Ajax
+		        $.ajax({
+		            url: register_form.attr('action'),
+		            type: register_form.attr('method'),
+		            dataType: 'html',
+		            data: register_form.serialize(),
+		            success: function(result) {
+		            	result = JSON.parse(result);
+		            	if (result.status == 'success') {
+		                	location.href = "{{ path('produit_index') }}";
+		                }else{
+		                	$('#error').css('display', 'block');
+			            	$('#error').html(result.message);
+			                setTimeout(function(){
+			                	$('#error').html("");
+		                        $('.loader-wrapper').css('display','none');
+		                        if (result.status == 'success') {
+		                        	$('#newsletter_mail').val('');
+		                        }
+			        		}, 3000);
+		                }
+		            },
+		            error: function(){
+		            	message = "Une erreur s'est produite, veuillez reessayer";
+		            	$('#error').css('display', 'block');
+                        $('#error').html(message);
+                        setTimeout(function(){
+                        	$('#error').html("");
+	                        $('.loader-wrapper').css('display','none');
+		        		}, 3000);
+		            }
+		        });
+		    });
+
+		    var newsletter_form = $('#newsletter_form');
+		    newsletter_form.submit(function(e) {
+		    	// $('#message').css('display', 'none');
+		    	$('.loader-wrapper').css('display','block');
+		        // prevent form submission
+		        e.preventDefault();
+
+		        // submit the form via Ajax
+		        $.ajax({
+		            url: newsletter_form.attr('action'),
+		            type: newsletter_form.attr('method'),
+		            dataType: 'html',
+		            data: newsletter_form.serialize(),
+		            success: function(result) {
+		            	result = JSON.parse(result);
+		            	$('#error').css('display', 'block');
+		            	$('#error').html(result.message);
+		                setTimeout(function(){
+		                	$('#error').html("");
+	                        $('.loader-wrapper').css('display','none');
+	                        if (result.status == 'success') {
+	                        	$('#newsletter_mail').val('');
+	                        }
+		        		}, 3000);
+		            },
+		            error: function(){
+		            	message = "Une erreur s'est produite, veuillez reessayer";
+		            	$('#error').css('display', 'block');
+                        $('#error').html(message);
+                        setTimeout(function(){
+                        	$('#error').html("");
+	                        $('.loader-wrapper').css('display','none');
+		        		}, 3000);
+		            }
+		        });
+		    });
+
+		    var contact_form = $('#contact_form');
+		    contact_form.submit(function(e) {
+		    	// $('#message').css('display', 'none');
+		    	$('.loader-wrapper').css('display','block');
+		        // prevent form submission
+		        e.preventDefault();
+
+		        // submit the form via Ajax
+		        $.ajax({
+		            url: contact_form.attr('action'),
+		            type: contact_form.attr('method'),
+		            dataType: 'html',
+		            data: contact_form.serialize(),
+		            success: function(result) {
+		            	result = JSON.parse(result);
+		            	$('#error').html(result.message);
+		            	$('#error').css('display', 'block');
+		                setTimeout(function(){
+		                	$('#error').html("");
+	                        $('.loader-wrapper').css('display','none');
+	                        if (result.status == 'success') {
+	                        	document.getElementById("contact_form").reset();
+	                        }
+		        		}, 3000);
+		            },
+		            error: function(){
+		            	message = "Une erreur s'est produite, veuillez reessayer";
+		            	$('#error').css('display', 'block');
+                        $('#error').html(message);
+                        setTimeout(function(){
+                        	$('#error').html("");
+	                        $('.loader-wrapper').css('display','none');
+		        		}, 3000);
+		            }
+		        });
+		    });
+
+		    function reinitialisation(){
+		    	document.getElementById('form_reinit').style.display = 'none';
+		    	document.getElementById('message').style.display = 'none';
+		    	document.getElementById('message_resset_fail').style.display = 'none';
+		    	document.getElementById('message_resset_success').style.display = 'none';
+		    	document.getElementById("login_form").reset();
+		    	document.getElementById("register_form").reset();
+		    	document.getElementById("form_reinit").reset();
+		    	document.getElementById("reinit_mail").value = '';
+		    }
+
+		    $('#scroll').click(function(){
+		        $('html, body').animate({scrollTop:0}, 'slow');
+		    });
+		    if (window.screen.width <= 768) {
+	        	$('#menu nav').addClass('fixed-top');
+			}else{
+				$(window).scroll(function(){
+				    if ($(window).scrollTop() >= 70) {
+				        $('#menu nav').addClass('fixed-header');
+				        // $('nav').css('width','90%');
+				    }
+				    else {
+				        $('#menu nav').removeClass('fixed-header');
+				    }
+				});
+			}
+        </script>
+        {% endblock scripts %}
+        <noscript>Votre navigateur ne supporte pas javascript ou javascript est désactivé</noscript>
+	</body>
+</html>

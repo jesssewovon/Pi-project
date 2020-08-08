@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création de compte!{% endblock %}
+
+{% block screen %}
+    <div class="">
+        <img class="img-responsive" src="{{ asset(chemin ~ 'template/first_banner500.png') }}" style="width: 100%">
+    </div>
+{% endblock %}
+
+{% block newsletter %}{% endblock newsletter %}
+
+{% block contact %}{% endblock contact %}
+
+{% block footer %}{% endblock footer %}
+
+{% block body %}
+<section id="login">
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+		    <h1>Register</h1>
+
+		    {{ form_start(registrationForm, {'attr': {'class': 'subscription relative'}}) }}
+		        <div class="row">
+		        	<div class="col-md-4">
+		        		{{ form_row(registrationForm.nom) }}
+		        	</div>
+		        	<div class="col-md-8">
+		        		{{ form_row(registrationForm.prenoms) }}
+		        	</div>
+		        </div>
+		        <div class="row">
+		        	<div class="col-md-3">
+		        		{{ form_row(registrationForm.num_tel) }}
+		        	</div>
+		        	<div class="col-md-6">
+		        		{{ form_row(registrationForm.email) }}
+		        	</div>
+		        	<div class="col-md-3">
+		        		{{ form_row(registrationForm.username,{'label': "Nom d'utilisateur"}) }}
+		        	</div>
+		        </div>
+		        <div class="row">
+		        	<div class="col-md-4">
+		        		{{ form_row(registrationForm.plainPassword) }}
+		        	</div>
+		        	<div class="col-md-8">
+		        		{{ form_row(registrationForm.repeatPassword) }}
+		        	</div>
+		        </div>
+		        {{ form_row(registrationForm.adresse) }}
+		        <div class="row">
+		        	<div class="col-md-2">
+		        		{{ form_row(registrationForm.agreeTerms) }}
+		        	</div>
+		        </div>
+
+		        <button class="primary-btn hover" type="submit">
+                    <span class="mr-10">Créer compte</span><span class="lnr lnr-arrow-right"></span>
+                </button>
+		    {{ form_end(registrationForm) }}
+		</div>
+    </div>
+</section>
+{% endblock %}

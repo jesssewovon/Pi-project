@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pi-Shop{% endblock %}
+
+{% block screen %}
+    <div class="">
+        <img class="img-responsive" src="{{ asset(chemin ~ 'template/first_banner500.png') }}" style="width: 100%;object-fit: cover;">
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div style="width: 90%;margin: auto;background-color: #f0f0f0;">
+    	<img style="min-height: 300px; max-height: 300px;object-fit: cover;width: 30%;margin-left: 30px;margin-top: -150px;" class="card-img-top" src="{{ asset(chemin ~ 'upload/images/' ~ produit.photo) }}" alt="Card image cap">
+    </div>
+	<section id="contenu">
+		{{ include('default/VIPAnnonces.html.twig') }}
+	</section>
+{% endblock body %}
+
+
+{% block scripts %}
+
+    {{ parent() }}
+
+    
+{% endblock %}

@@ -1,0 +1,245 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pi-Shop{% endblock %}
+
+{% block screen %}
+    <div class="">
+    	<img class="img-responsive" src="{{ asset(chemin ~ 'template/first_banner500.png') }}" style="width: 100%">
+    </div>
+{% endblock %}
+
+{% block body %}
+	<section id="contenu">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12 col-lg-1 col-xl-1">
+					<h4 style="padding-top: 20px;">Catégorie</h4>
+				</div>
+				<div class="col-sm-12 col-md-12 col-lg-11 col-xl-11">
+					<div class="container">
+						<div class="row">
+							<div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel"  data-interval="1000">
+					            <div class="MultiCarousel-inner">
+					            	{% for categorie in categories %}
+					                <div class="item">
+					                    <div class="pad15">
+					                        <a href="{{ path('categorie_search',{'id': categorie.id}) }}"><p class="lead">{{ categorie.libelle }}</p></a>
+					                    </div>
+					                </div>
+					                {% endfor %}
+					            </div>
+					            <button class="btn btn-primary leftLst"><</button>
+					            <button class="btn btn-primary rightLst">></button>
+					        </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			{% if mot is defined %}
+				<div class="container">
+					<div class="row">
+						<div class="col-12 col-sm-7">
+							<a href="{{ path('all') }}" style="background-color: #512c75;color: white;padding: 5px;border-radius: 5px;">Toutes annonces</a>
+							<i class="fa fa-hand-o-right"></i>
+							{% if mot != '' %}
+							    Résultat de la recherche "{{ mot }}"
+							{% endif %}
+						</div>
+						<div class="col-12 col-sm-5">
+							Avez-vous des annonces? <a href="" style="background-image: -webkit-linear-gradient(0deg, #e66587 0%, #f09458 100%);padding: 10px;border-radius: 35px;height: 35px;color: white;">Publier annonce</a>
+						</div>
+					</div>
+				</div>
+				
+			{% elseif categorie is defined %}
+				<div class="container">
+					<div class="row">
+						<div class="col-12 col-sm-7">
+							<a href="{{ path('all') }}" style="background-color: #512c75;color: white;padding: 5px;border-radius: 5px;">Toutes annonces</a>
+							<i class="fa fa-hand-o-right"></i>
+							Les annonces de la catégorie "{{ categorie.libelle }}"
+						</div>
+						<div class="col-12 col-sm-5">
+							<p>Avez-vous des annonces?</p>
+							 <a href="" style="background-image: -webkit-linear-gradient(0deg, #e66587 0%, #f09458 100%);padding: 10px;border-radius: 35px;height: 35px;color: white;">Publier annonce</a>
+						</div>
+					</div>
+				</div>
+				
+			{% else %}
+				<div class="container">
+					<div class="row">
+						<div class="col-12 col-sm-7">
+							<a href="{{ path('all') }}" style="background-color: #512c75;color: white;padding: 5px;border-radius: 5px;">Toutes annonces</a>
+							<i class="fa fa-hand-o-right"></i>
+							Les annonces {{ periode_text }}
+						</div>
+						<div class="col-12 col-sm-5">
+							<p>Avez-vous des annonces?</p>
+							 <a href="" style="background-image: -webkit-linear-gradient(0deg, #e66587 0%, #f09458 100%);padding: 10px;border-radius: 35px;height: 35px;color: white;">Publier annonce</a>
+						</div>
+					</div>
+				</div>
+				
+			{% endif %}
+			<hr>
+			<div class="row">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="border-right: 1px solid #f0f0f0">
+					<div class="row" id="res">
+						{% set unite = 500 %}
+						{% for produit in produits %}
+						<div class="col-6 col-sm-6 col-md-3 col-lg-2 col-xl-2 bot" style="" data-toggle="modal" data-target="#myModal">
+						<!-- <img src="{{ asset('template/img/a.jpg') }}" class="img-fluid"> -->
+							<div class="card">
+							  <div style="width: 100%;height: 160px;/*overflow: hidden;*/">
+							  	<img style="min-height: 160px; max-height: 160px;object-fit: cover;" class="card-img-top" src="{{ asset(chemin ~ 'upload/images/' ~ produit.photo) }}" alt="Card image cap">
+							  	{#<div style="width: 100%;height: 100%;background-size: cover;background-repeat: no-repeat;background-image: url({{ asset(chemin ~ 'upload/images/' ~ produit.photo) }}");></div>#}
+							  	{% set left = date("now").diff(produit.datePublication) %}
+								  {% set sec = left|date("%s") %}
+								  {% set min = left|date("%i") %}
+								  {% set h = left|date("%h") %}
+								  {% set j = left|date("%d") %}
+								  {% set mois = left|date("%m") %}
+								  {% set an = left|date("%Y") %}
+								  {% set temps = (an != 0)?' Il y a '~an|round(0,'floor')~' an(s)':((mois != 0)?' Il y a '~mois|round(0,'floor')~' mois':(j != 0)?' Il y a '~j|round(0,'floor')~' jour(s)':(h != 0)?' Il y a '~h|round(0,'floor')~' h':(min != 0)?' Il y a '~min|round(0,'floor')~' min':(sec != 0)?' Il y a '~sec|round(0,'floor')~' s':"A l'instant") %}
+							  </div>
+							  <div style="background-color: rgba(0,0,0,0.5);border-radius: 15px;margin-top: -20px;width: max-content;color: white;padding: 0 5px 0 5px;"><i class="fa fa-clock-o" style="color: white;"></i> {{ temps }}</div>
+							  <div class="card-body">
+							  	<i class="fa fa-star"></i>
+							    <h5 class="card-title">{{ produit.nom }}</h5>
+							    <p class="card-text">Lomé-TOGO</p>
+							  </div>
+							  <a href="#" class="btn btn-primary">{{ produit.prix/unite }} π</a>
+							</div>
+						</div>
+						{% else %}
+						<div>Aucune annonce trouvée</div>
+						{% endfor %}
+					</div>
+					<div id="pagination" class="row justify-content-center">
+						<div class="col-10 col-sm-3 col-md-8 col-lg-3 col-xl-3">
+							<ul style="" id="pagination-demo" class="pagination-sm"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock body %}
+
+
+{% block scripts %}
+
+    {{ parent() }}
+
+    {% set photo_path = asset(chemin ~ 'upload/images/') %}
+
+    <script type="text/javascript" src="{{ asset(chemin ~ 'jquery.twbsPagination.min.js') }}"></script>
+    <script type="text/javascript">
+    	old_num_page = 1;
+    	nb_per_page = 40;
+    	nb = parseInt("{{ all|length }}");
+    	nb_page = nb/nb_per_page;
+    	if (nb%nb_per_page != 0) {nb_page+=1;}
+    	////////////////////////////////////////////////////////////////////////////
+    	var $pagination = $('#pagination-demo');
+	    var defaultOpts = {
+	        totalPages: nb_page,
+            visiblePages: 5,
+            startPage: 1,
+            next: 'Suiv',
+            prev: 'Préc',
+            first: '<<',
+            last: '>>',
+            initiateStartPageClick: false,
+            onPageClick: function (event, page) {
+            	loading(event, page);
+            }
+	    };
+	    $pagination.twbsPagination(defaultOpts);
+
+	    function loading(event, page) {
+	        // results.css(['border-color':'lightgray', 'background-color':'gray']);
+	        $('.loader-wrapper').css('display','block');
+	        $('.showbox').css('display','block');
+
+	        $.ajax({
+	        	type : "POST",
+	        	url : "{{ path('search_ajax') }}",
+	        	data : {num_page: page},
+	        	success: function(response){
+	        		old_num_page = page;
+
+	        		var results = $("#pagination-demo a").filter(function() {
+			            return $(this).text() === page+"";
+			        });
+			        results.css('border-color','lightgray');
+			        results.css('background-color','#f0f0f0');
+	        		// alert(response);
+	        		data = response.resultat;
+	        		nb_page = response.all.length/nb_per_page;
+
+	        		$('.loader-wrapper').css('display','none');
+	                $('.showbox').css('display','none');
+	                $('#res').html('');
+	                for (var i = 0; i < data.length; i++) {
+	                	// console.log(data[i].annee+'-'+data[i].mois+'-'+data[i].jour);
+	                	temps = (data[i].annee != 0)?" Il y a "+data[i].annee+" an(s)":((data[i].mois != 0)?" Il y a "+data[i].mois+" mois":((data[i].jour != 0)?" Il y a "+data[i].jour+" jour(s)":((data[i].heure != 0)?" Il y a "+data[i].heure+" h":((data[i].minute != 0)?" Il y a "+data[i].minute+" min":((data[i].seconde != 0)?" Il y a "+data[i].seconde+" s":"A l'instant")))));
+
+	                	$('#res').append('<div class="col-6 col-sm-6 col-md-3 col-lg-2 col-xl-2 bot" style=""><div class="card"><div style="width: 100%;height: 160px;"><img style="min-height: 160px; max-height: 160px;object-fit: cover;" class="card-img-top" src="'+'{{ photo_path }}'+data[i].photo+'" alt="Card image cap"></div><div style="background-color: rgba(0,0,0,0.5);border-radius: 15px;margin-top: -20px;width: max-content;color: white;padding: 0 5px 0 5px;"><i class="fa fa-clock-o" style="color: white;"></i>'+temps+'</div><div class="card-body"><i class="fa fa-star"></i><h5 class="card-title">'+data[i].nom+'</h5><p class="card-text">Lomé-TOGO</p></div><a href="#" class="btn btn-primary">'+parseInt(data[i].prix/500)+' π</a></div></div>');
+	                }
+
+	                var totalPages = parseInt(response.all.length/nb_per_page);
+	                if (response.all.length%nb_per_page != 0) {
+	                	totalPages += 1;
+	                }
+		            $pagination.twbsPagination('destroy');
+		            $pagination.twbsPagination($.extend({}, defaultOpts, {
+		                startPage: page,
+		                totalPages: totalPages
+		            }));
+		            var results = $("#pagination-demo a").filter(function() {
+			            return $(this).text() === page+"";
+			        });
+			        results.css('border-color','lightgray');
+			        results.css('background-color','#f0f0f0');
+
+		            location.href = "#contenu";
+	        	},
+	        	error: function(){
+	        		$('#error').css('display','block');
+	        		setTimeout(function(){
+                        $('.loader-wrapper').css('display','none');
+	                    $('.showbox').css('display','none');
+	                    $('#error').css('display','none');
+
+	                    var results = $("#pagination-demo a").filter(function() {
+				            return $(this).text() === old_num_page+"";
+				        });
+				        results.css('border-color','lightgray');
+				        results.css('background-color','#f0f0f0');
+
+				        $("#pagination-demo li").removeClass( "active" );
+				        $("#pagination-demo li").css( "background-color", "#fff" );
+				        results.parent().addClass('active');
+	        		}, 3000);
+	        		
+	        	}
+	        });
+        }
+    	////////////////////////////////////////////////////////////////////////////
+        liste = $("#pagination-demo li.active");
+        liste.each(function(){
+        	// console.log($(this).find('a'));
+        	$(this).find('a').css('border-color','lightgray');
+        });
+       
+        var results = $("#pagination-demo a:contains('"+"1"+"')").filter(function() {
+            return $(this).text() === "1";
+        });
+        $("#pagination-demo li").removeClass( "active" );
+        // console.log(results.html());
+        results.parent().addClass('active');
+    </script>
+{% endblock %}

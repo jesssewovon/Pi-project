@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pi-Shop{% endblock %}
+
+{% block body %}
+	<section id="contenu">
+		{% if message is defined %}
+		    {{ message }}
+		{% endif %}
+
+		{% if form_resset is defined %}
+		    {{ form_start(form_resset) }}
+		        {{ form_widget(form_resset) }}
+		    {{ form_end(form_resset) }}
+		{% endif %}
+	</section>
+{% endblock body %}

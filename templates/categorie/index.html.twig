@@ -1,0 +1,64 @@
+{% extends 'adminLayout.html.twig' %}
+
+{% block title %}Categorie index{% endblock %}
+
+{% block slider %}{% endblock %}
+{% block newsletter %}{% endblock newsletter %}
+
+{% block body %}
+    <main class="app-content">
+      <div class="app-title">
+        <div>
+          <h1><i class="fa fa-th-list"></i> Liste catégories</h1>
+          <p><a href="{{ path('categorie_new') }}"><i class="fa fa-list">Ajout catégorie</i></a></p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb side">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item">Tables</li>
+          <li class="breadcrumb-item active"><a href="#">Data Table</a></li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tile">
+            <div class="tile-body" style="overflow: auto;">
+              <table class="table table-hover table-bordered" id="sampleTable">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for categorie in categories %}
+                    <tr>
+                        <td>{{ categorie.code }}</td>
+                        <td>{{ categorie.libelle }}</td>
+                        <td>{{ categorie.description }}</td>
+                        <td>
+                            <a href="{{ path('categorie_show', {'id': categorie.id}) }}">show</a>
+                            <a href="{{ path('categorie_edit', {'id': categorie.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                  {% else %}
+                        <tr>
+                            <td colspan="5">no records found</td>
+                        </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset(chemin ~ 'adminTemplate/js/plugins/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset(chemin ~ 'adminTemplate/js/plugins/dataTables.bootstrap.min.js') }}"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+{% endblock %}
